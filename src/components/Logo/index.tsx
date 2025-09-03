@@ -1,11 +1,13 @@
 import styles from './styles.module.css';
-import {Timer} from "lucide-react";
+import {BlackHoleIcon} from "@hugeicons/core-free-icons";
+import {HugeiconsIcon} from "@hugeicons/react";
+
 
 export function Logo()
 {
     return <div className={styles.logo}>
         <a href='#' className={styles.logoLink}>
-            <Timer/>
+            <HugeiconsIcon icon={BlackHoleIcon} />
             <span>Tymes</span>
         </a>
     </div>
