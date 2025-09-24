@@ -1,14 +1,14 @@
-import type {TaskModel} from "./TaskModel.ts";
+import type { TaskModel } from "./TaskModel.ts";
 
 export type TaskStateModel = {
- tasks : TaskModel[];
- secondsRemaining :  number;
- formattedSecondsRemaining : string;
- activeTask : TaskModel | null;
- currentCycle : number;
- config : {
-     workTime : number;
-     shortBrakeTime :  number;
-     longBrakeTime :  number;
- }
-}
+  tasks: TaskModel[];
+  secondsRemaining: number;
+  formattedSecondsRemaining: string;
+  activeTask: TaskModel | null;
+  currentCycle: number;
+  config: {
+    workTime: number;
+    shortBreakTime: number;
+    longBreakTime: number;
+  };
+};
