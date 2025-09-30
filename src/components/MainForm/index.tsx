@@ -1,7 +1,7 @@
 import { DefaultInput } from "../DefaultInput";
 import { Cycles } from "../Cycles";
 import { DefaultButton } from "../DefaultButton";
-import { PlayIcon } from "@hugeicons/core-free-icons";
+import { PlayIcon, StopIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useRef } from "react";
 import type { TaskModel } from "../../models/TaskModel.ts";
@@ -47,6 +47,23 @@ export function MainForm() {
       };
     });
   }
+
+  function handleInterruptTask() {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        activeTask: null,
+        secondsRemaining: 0,
+        formattedSecondsRemaining: "00:00",
+        tasks: prevState.tasks.map((task) => {
+          if (task.id === prevState.activeTask?.id) {
+            return { ...task, interruptDate: Date.now() };
+          }
+          return task;
+        }),
+      };
+    });
+  }
   return (
     <form onSubmit={handleCreateNewTask} className="form" action="">
       <div className="formRow">
@@ -56,6 +73,7 @@ export function MainForm() {
           label="Task"
           placeholder="Digite algo"
           ref={taskNameRef}
+          disabled={!!state.activeTask}
         />
       </div>
       <div className="formRow">O intervlao é de 25 minutos.</div>
@@ -66,7 +84,25 @@ export function MainForm() {
       )}
 
       <div className="formRow">
-        <DefaultButton icon={<HugeiconsIcon icon={PlayIcon} />} />
+        {!state.activeTask ? (
+          <DefaultButton
+            type="submit"
+            title="Iniciar nova tarefa"
+            aria-label="Iniciar nova tarefa"
+            icon={<HugeiconsIcon icon={PlayIcon} />}
+            key={"startTaskButton"}
+          />
+        ) : (
+          <DefaultButton
+            title="Interromper tarefa em andamento"
+            aria-label="Interromper tarefa em andamento"
+            type="button"
+            color="red"
+            onClick={handleInterruptTask}
+            icon={<HugeiconsIcon icon={StopIcon} />}
+            key={"stopTaskButton"}
+          />
+        )}
       </div>
     </form>
   );
